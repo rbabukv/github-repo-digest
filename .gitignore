@@ -8,3 +8,4 @@ build/
 venv/
 *.html
 !github_repo_digest/templates/*.html
+*.egg-info/
