@@ -1,0 +1,10 @@
+config.env
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.html
+!sglang_weekly_digest/templates/*.html
