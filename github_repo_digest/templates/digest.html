@@ -153,18 +153,6 @@ tr:hover {
     border-radius: 6px;
     border-left: 3px solid #1a73e8;
 }
-.reviewers-table {
-    margin-top: 16px;
-    width: auto;
-}
-.reviewers-table th,
-.reviewers-table td {
-    padding: 8px 16px;
-}
-.reviewer-rank {
-    font-weight: 700;
-    color: #e8710a;
-}
 </style>
 </head>
 <body>
@@ -188,26 +176,10 @@ tr:hover {
     <div class="window-note">
         <strong>Reporting window:</strong> {{ report_start }} → {{ report_end }}
     </div>
+</div>
 
-    <h3 style="color: #1a73e8; margin-top: 24px;">🏅 Top 5 Reviewers (Most PRs Approved & Merged)</h3>
-    <table class="reviewers-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Reviewer</th>
-                <th>PRs Merged</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for reviewer, count in top_reviewers %}
-            <tr>
-                <td class="reviewer-rank">{{ loop.index }}</td>
-                <td><a href="https://github.com/{{ reviewer }}" style="color: #1a73e8; text-decoration: none; font-weight: 500;">{{ reviewer }}</a></td>
-                <td style="font-weight: 600;">{{ count }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div style="font-size: 11px; color: #80868b; padding: 12px 24px; margin-bottom: 8px;">
+    *<strong>Disclaimer:</strong> Organization names are inferred from GitHub profiles and commit history. They may not be accurate or up-to-date.
 </div>
 
 <div class="section">
@@ -278,10 +250,6 @@ tr:hover {
             {% endfor %}
         </tbody>
     </table>
-</div>
-
-<div style="font-size: 11px; color: #80868b; padding: 12px 24px; margin-bottom: 8px;">
-    *<strong>Disclaimer:</strong> Organization names are inferred from GitHub profiles and commit history. They may not be accurate or up-to-date.
 </div>
 
 <div class="footer">

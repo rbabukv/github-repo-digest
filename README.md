@@ -9,9 +9,8 @@ An AI-powered agent that generates a weekly summary of pull request activity for
 3. **Ranks them** by code size → impact → number of reviewers → review comments
 4. **Generates concise AI summaries** for each PR using Claude (Bedrock or direct API)
 5. **Identifies the author's organization** from GitHub profiles and commit history
-6. **Computes the top 5 reviewers** who approved the most merged PRs
-7. **Sends an HTML email** with:
-   - Weekly overview (total PRs merged, top reviewers, reporting window)
+6. **Sends an HTML email** with:
+   - Weekly overview (total PRs merged, reporting window)
    - Top 40 Merged PRs (ranked)
    - Top 40 PRs Under Review (ranked)
 
@@ -130,7 +129,6 @@ To reduce API calls, PRs are pre-filtered by comment count before expensive enri
 - Total PRs merged in the reporting window
 - Total PRs under active review
 - Exact reporting window timestamps
-- Top 5 reviewers (by number of PRs they approved that were merged)
 
 ### 2. Top 40 Merged PRs
 Ranked table with: PR link, AI summary, author's organization*, diff stats

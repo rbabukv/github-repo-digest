@@ -11,7 +11,7 @@ import time
 from jinja2 import Environment, FileSystemLoader
 
 from .config import TOP_N_PRS, SCHEDULE_CRON, SCHEDULE_DAY, SGLANG_REPO
-from .github_client import get_merged_prs, get_open_prs_under_review, get_user_org, get_top_reviewers, get_report_window
+from .github_client import get_merged_prs, get_open_prs_under_review, get_user_org, get_report_window
 from .ranker import rank_prs
 from .summarizer import batch_summarize
 from .emailer import send_digest
@@ -66,10 +66,6 @@ def generate_digest(dry_run=False, output_file=None, repo=None):
     print("🤖 Generating AI summaries for open PRs...")
     open_summaries = batch_summarize(open_ranked)
 
-    print("🏅 Computing top 5 reviewers...")
-    top_reviewers = get_top_reviewers(merged_prs_raw, top_n=5, repo=repo)
-    print(f"   Top reviewers: {[r[0] for r in top_reviewers]}")
-
     print("🏢 Resolving author organizations...")
     org_cache = {}
     for pr in merged_ranked + open_ranked:
@@ -96,7 +92,6 @@ def generate_digest(dry_run=False, output_file=None, repo=None):
         report_end=end.strftime("%b %d, %Y %H:%M UTC"),
         total_merged=len(merged_prs_raw),
         total_open_under_review=len(open_prs_raw),
-        top_reviewers=top_reviewers,
         merged_prs=merged_ranked,
         open_prs=open_ranked,
     )
