@@ -7,4 +7,4 @@ build/
 .venv/
 venv/
 *.html
-!sglang_weekly_digest/templates/*.html
+!github_repo_digest/templates/*.html
