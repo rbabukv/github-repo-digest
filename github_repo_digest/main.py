@@ -13,7 +13,6 @@ from jinja2 import Environment, FileSystemLoader
 from .config import TOP_N_PRS, SCHEDULE_CRON, SCHEDULE_DAY, SGLANG_REPO
 from .github_client import get_merged_prs, get_open_prs_under_review, get_user_org, get_report_window
 from .ranker import rank_prs
-from .categorizer import enrich_with_categories, group_by_category
 from .summarizer import batch_summarize
 from .emailer import send_digest
 
@@ -76,16 +75,6 @@ def generate_digest(dry_run=False, output_file=None, repo=None):
         pr["org"] = org_cache.get(username, "Unknown")
         pr["ai_summary"] = merged_summaries.get(pr["number"]) or open_summaries.get(pr["number"], "")
 
-    print("🏷️  Categorizing PRs and flagging Intel-relevant changes...")
-    enrich_with_categories(merged_ranked)
-    enrich_with_categories(open_ranked)
-    merged_grouped = group_by_category(merged_ranked)
-    open_grouped = group_by_category(open_ranked)
-
-    intel_merged = [pr for pr in merged_ranked if pr.get("_intel_relevant")]
-    intel_open = [pr for pr in open_ranked if pr.get("_intel_relevant")]
-    print(f"   Intel-relevant: {len(intel_merged)} merged, {len(intel_open)} under review")
-
     week_label = get_week_label()
     subject = f"{repo_name.capitalize()} Summary Digest — {week_label}"
 
@@ -103,10 +92,8 @@ def generate_digest(dry_run=False, output_file=None, repo=None):
         report_end=end.strftime("%b %d, %Y %H:%M UTC"),
         total_merged=len(merged_prs_raw),
         total_open_under_review=len(open_prs_raw),
-        intel_merged=intel_merged,
-        intel_open=intel_open,
-        merged_grouped=merged_grouped,
-        open_grouped=open_grouped,
+        merged_prs=merged_ranked,
+        open_prs=open_ranked,
     )
 
     if output_file:
