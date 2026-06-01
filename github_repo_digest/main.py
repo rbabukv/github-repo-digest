@@ -105,8 +105,9 @@ def generate_digest(dry_run=False, output_file=None, repo=None):
         print(f"   Merged PRs: {len(merged_ranked)}, Open PRs: {len(open_ranked)}")
         return
 
-    print(f"📧 Sending email: {subject}")
-    send_digest(subject, html)
+    sender_name = f"{repo_name.capitalize()} repo Digest <no-reply@intel.com>"
+    print(f"📧 Sending email: {subject} (from: {sender_name})")
+    send_digest(subject, html, sender=sender_name)
     print("✅ Digest sent successfully!")
 
 

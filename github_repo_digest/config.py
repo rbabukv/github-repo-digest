@@ -11,7 +11,7 @@ if _env_path.exists():
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 EMAIL_RECIPIENTS = [e.strip() for e in os.environ.get("EMAIL_RECIPIENTS", "").split(",") if e.strip()]
-EMAIL_FROM = os.environ.get("EMAIL_FROM", "No Reply <repo-digest@intel.com>")
+EMAIL_FROM = os.environ.get("EMAIL_FROM", "no-reply@intel.com")
 SGLANG_REPO = os.environ.get("SGLANG_REPO", "sgl-project/sglang")
 TOP_N_PRS = int(os.environ.get("TOP_N_PRS", "40"))
 SCHEDULE_CRON = os.environ.get("SCHEDULE_CRON", "01:30")

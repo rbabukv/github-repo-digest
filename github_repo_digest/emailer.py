@@ -12,15 +12,16 @@ SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.intel.com")
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "25"))
 
 
-def send_digest(subject, html_body, recipients=None):
+def send_digest(subject, html_body, recipients=None, sender=None):
     """Send an HTML email using SMTP (preferred) or sendmail fallback."""
     recipients = recipients or EMAIL_RECIPIENTS
+    sender = sender or EMAIL_FROM
     if not recipients:
         raise ValueError("No email recipients configured")
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = EMAIL_FROM
+    msg["From"] = sender
     msg["To"] = ", ".join(recipients)
 
     plain_text = "This email requires an HTML-capable email client."
@@ -30,7 +31,7 @@ def send_digest(subject, html_body, recipients=None):
     # Try SMTP first
     try:
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=30) as server:
-            server.sendmail(EMAIL_FROM, recipients, msg.as_string())
+            server.sendmail(sender, recipients, msg.as_string())
         print(f"   Sent via SMTP ({SMTP_HOST}:{SMTP_PORT})")
         return True
     except Exception as smtp_err:
